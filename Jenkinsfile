@@ -1,32 +1,12 @@
-
-pipeline 
-{
-  agent any
-
-  
-  stages {
-      
-       stage ('clone')
-    {
-        steps{
-        git  branch: 'main', url: 'https://github.com/piyalondhe/CICD-demo.git'
-             }
+pipeline {
+    agent {
+        docker { image 'node:14-alpine' }
     }
-
-    
-       stage ('deploy')
-    {
-        steps{
-        sshPublisher(publishers: [sshPublisherDesc(configName: 'Ansible', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''cd /root/.ansible/roles/
-ansible-galaxy install zaxos.tomcat-ansible-role
-rm -rf CICD-demo
-git clone https://github.com/piyalondhe/CICD-demo.git
-ansible-playbook CICD-demo/tomcat_install.yml
-ansible-playbook CICD-demo/app_deploy.yml''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '//root/', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'target/mvn-hello-world.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-             }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
+            }
+        }
     }
-     
-   
-          }
-     
 }
