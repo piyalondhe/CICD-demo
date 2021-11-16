@@ -9,7 +9,7 @@ pipeline
        stage ('clone')
     {
         steps{
-        git 'https://github.com/piyalondhe/CICD-demo.git'
+        git  branch: 'main', url: 'https://github.com/piyalondhe/CICD-demo.git'
              }
     }
 
