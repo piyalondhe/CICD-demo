@@ -1,0 +1,9 @@
+---
+
+- hosts: prod
+
+  tasks:
+          - name: copying webapp into the tomcat server
+            copy:
+                    src: /root/target/mvn-hello-world.war
+                    dest: /opt/tomcat/webapps/app1.war
